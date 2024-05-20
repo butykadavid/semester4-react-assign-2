@@ -8,6 +8,7 @@ import Root from './routes/root'
 import MainPage from './routes/mainPage'
 import Register from './routes/register';
 import LogIn from './routes/login';
+import Profile from './routes/profile';
 
 import ErrorPage from "./error-page";
 
@@ -16,6 +17,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import './index.css'
+import NewJob from './routes/newJob';
+import JobDetails from './routes/jobDetails';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +37,18 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LogIn />
+      },
+      {
+        path: "/profile/:profileId",
+        element: <Profile />
+      },
+      {
+        path: "/newjob",
+        element: <NewJob />
+      },
+      {
+        path: "/jobdetails/:jobId",
+        element: <JobDetails />
       }
     ]
   },
