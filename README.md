@@ -252,7 +252,7 @@ Az elkészült program beadása a Canvasen történik, és két dolgot kell ide 
 - [x] Regisztráció: Munkavállaló regisztráció esetén a felhasználó meg tudja adni a tapasztalatait (2pt)
 - [x] Bejelentkezés: Bejelentkezés működik (1pt)
 - [x] Munkavállaló - Profilom: Látszódnak a munkavállaló adatai (név, email cím), és az oldalon kilistázza az előző munkahelyeket (1pt)
-- [ ] Munkavállaló - Profilom: A korábban hozzáadott munkatapasztalatok szerkeszthetőek (1pt)
+- [x] Munkavállaló - Profilom: A korábban hozzáadott munkatapasztalatok szerkeszthetőek (1pt)
 - [x] Munkavállaló - Álláshirdetések oldala: A gomb megjelenik, amivel az állásra tudunk jelentkezni. Sikeres kérés esetén a felhasználó számára megjelenik egy üzenet a sikeres jelentkezésről (1 pont)
 - [x] Munkáltató - Navigáció: Kizárólag bejelentkezett munkáltató esetén jelenik meg az álláshirdetés hozzáadása opció (1pt)
 - [ ] Munkáltató - Profilom: Listázásra kerülnek a hozzáadott álláshirdetések, az egyes listaelemek mellett a szerkesztés, törlés és megtekintés opciók, megjelenik a “Hozzáadás” gomb (2pt)

@@ -26,13 +26,16 @@ export default function LogIn() {
                 "password": password
             }
         }).unwrap().then(data => {
-            console.log(data)
-            dispatch(login(data))
+            if (data.error){
+                console.log("HIBA")
+            } else {
+                dispatch(login(data))
+                resetValues()
+                navigate("/")
+            }
+        }).catch(err => {
+            console.log("HIBA")
         })
-
-        resetValues()
-
-        navigate("/")
     }
 
     return (

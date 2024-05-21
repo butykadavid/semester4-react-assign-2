@@ -41,7 +41,7 @@ export default function JobDetails() {
             }
           })
           .catch(error => {
-            openModalWithParams(`Hiba történt a jelentkezés során:\n\r${error}`,"error")
+            openModalWithParams(`Hiba történt a jelentkezés során:\n\r${error.message}`,"error")
           });
     }
 

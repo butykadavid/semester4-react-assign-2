@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react"
 import ExperienceBlock from "./experienceBlock"
 
 export default function ProfileCard({ profile, experiences }) {
+
+    const [_experiences, setExperiences] = useState(experiences)
+
+    const modifyExps = (id, newExpObj) => {
+        const rest = _experiences.filter(exp => exp.id != id)
+
+        const newExpsArr = [...rest, newExpObj].sort((a, b) => a.id - b.id)
+        setExperiences(newExpsArr)
+    }
+
+    const deleteExpById = (id) => {
+        const rest = _experiences.filter(exp => exp.id != id)
+
+        const newExpsArr = [...rest].sort((a, b) => a.id - b.id)
+        setExperiences(newExpsArr)
+    }
 
     return (
         <div className="w-1/2 flex flex-col border border-gray-300 shadow-lg rounded-md p-5">
@@ -15,15 +32,15 @@ export default function ProfileCard({ profile, experiences }) {
             </div>
 
             {/* Experiences container */}
-            <div className="flex flex-col justify-center items-center text-sm py-5">
+            <div className="flex flex-col justify-center items-center text-xs py-5">
 
-                {experiences.length === 0 ?
+                {_experiences.length === 0 ?
                     <h1 className="text-gray-400">Nincsenek korábbi munkahelyek</h1>
                     :
                     <>
-                        {experiences.map((item, index) => {
+                        {_experiences.map((item, index) => {
                             return (
-                                <ExperienceBlock key={index} info={item} index={index} />
+                                <ExperienceBlock key={item.id} info={item} index={index} modifyExps={modifyExps} deleteExpById={deleteExpById}/>
                             )
                         })}
                     </>

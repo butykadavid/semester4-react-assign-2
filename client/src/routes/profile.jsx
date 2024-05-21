@@ -3,6 +3,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { useGetUserQuery } from "../states/usersApi";
 import { useGetExpQuery } from "../states/experiencesApi"
 import ProfileCard from "../components/profileCard";
+import { useState } from "react";
 
 export default function Profile() {
     const { profileId } = useParams()
@@ -23,6 +24,7 @@ export default function Profile() {
     }
 
     if (isProfileSuccess && isExpSuccess) {
+
         return (
             <div className="w-full flex flex-col justify-start items-center">
 

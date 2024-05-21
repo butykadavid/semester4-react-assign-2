@@ -24,8 +24,21 @@ export const experiencesApi = createApi({
                 method: 'POST',
                 body: body
             })
+        }),
+        modifyExp: builder.mutation({
+          query: ({body, id}) => ({
+            url: `experiences/${id}`,
+            method: 'PATCH',
+            body: body
+          })
+        }),
+        deleteExp: builder.mutation({
+          query: ({id}) => ({
+            url: `experiences/${id}`,
+            method: 'DELETE'
+          })
         })
     })
 })
 
-export const { useGetExpQuery, useCreateExpMutation } = experiencesApi
+export const { useGetExpQuery, useCreateExpMutation, useModifyExpMutation, useDeleteExpMutation } = experiencesApi
