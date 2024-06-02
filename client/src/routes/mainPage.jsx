@@ -55,10 +55,10 @@ export default function MainPage() {
     const clearFilters = () => {
         setCompany("")
         setMinSalary(0)
-        setMaxSalary(0)
+        setMaxSalary(Infinity)
         setType("")
         setLocation("")
-        setIsRemote(false)
+        setIsRemote(null)
     }
 
     // useEffect(() => {

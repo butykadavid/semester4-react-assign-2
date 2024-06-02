@@ -43,7 +43,7 @@ export default function Root() {
                 {isAuthenticated ?
                     <div>
                         {isEmployer ?
-                            <Link to={'/newjob'} className="px-2 py-1 mx-1 border-gray-300 border rounded-md hover:bg-gray-200 duration-300">🆕  Álláshirdetés létrehozása</Link>
+                            <Link to={`/newjob`} className="px-2 py-1 mx-1 border-gray-300 border rounded-md hover:bg-gray-200 duration-300">🆕  Álláshirdetés létrehozása</Link>
                             :
                             <></>
                         }

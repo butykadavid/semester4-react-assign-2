@@ -1,4 +1,14 @@
+import { useRef } from "react"
+
 export default function JobsFilter(props) {
+
+    const _ref = useRef(null)
+
+    const onClearClick = () => {
+        props.clearFilters()
+
+        _ref.current.checked = false
+    }
 
     return (
         <div className="w-full h-24 flex justify-center items-center text-sm">
@@ -49,7 +59,7 @@ export default function JobsFilter(props) {
                 }
             </div>
 
-            <button onClick={() => props.clearFilters()} className="m-1 px-2 py-1 flex justify-center items-center bg-gray-200 border-gray-300 border rounded-md hover:bg-gray-300 hover:cursor-pointer duration-300">
+            <button onClick={() => onClearClick()} ref={_ref} className="m-1 px-2 py-1 flex justify-center items-center bg-gray-200 border-gray-300 border rounded-md hover:bg-gray-300 hover:cursor-pointer duration-300">
                 Visszaállítás
             </button>
             <button onClick={() => props.applyFilters()} className="m-1 px-2 py-1 rounded-md text-white bg-green-500 border border-gray-300 hover:bg-green-300 duration-300">
