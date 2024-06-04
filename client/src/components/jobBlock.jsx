@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import InfoModal from "./infoModal"
+import AppliersModal from "./appliersModal"
 import { useModifyJobMutation, useDeleteJobMutation } from "../states/jobsApi"
 
 export default function jobBlock({ info, index, modifyJobs, deleteJobById }) {
@@ -17,9 +18,11 @@ export default function jobBlock({ info, index, modifyJobs, deleteJobById }) {
 
     const [isThereChange, setIsThereChange] = useState(false)
 
-    const [modaltext, setModalText] = useState("")
-    const [modalIcon, setModalIcon] = useState("info")
-    const [isModalVisible, setModalVisible] = useState(false)
+    const [infoModaltext, setInfoModalText] = useState("")
+    const [infoModalIcon, setInfoModalIcon] = useState("info")
+    const [isInfoModalVisible, setInfoModalVisible] = useState(false)
+
+    const [isAppliersModalVisible, setAppliersModalVisible] = useState(false)
 
     const [saveJob] = useModifyJobMutation()
     const [deleteJob] = useDeleteJobMutation()
@@ -39,7 +42,7 @@ export default function jobBlock({ info, index, modifyJobs, deleteJobById }) {
             id: info.id
         }).then(res => {
             if (res.error) {
-                openModalWithParams(`Hiba történt a lista módosítása során:\n\r${res.error.data.message}`, "error")
+                openInfoModalWithParams(`Hiba történt a lista módosítása során:\n\r${res.error.data.message}`, "error")
             } else {
                 modifyJobs(info.id, {
                     "id": info.id,
@@ -55,10 +58,10 @@ export default function jobBlock({ info, index, modifyJobs, deleteJobById }) {
 
                 setIsThereChange(false)
 
-                openModalWithParams("Lista sikeresen frissítve!", "success")
+                openInfoModalWithParams("Lista sikeresen frissítve!", "success")
             }
         }).catch(err => {
-            openModalWithParams(`Hiba történt a lista módosítása során:\n\r${err.message}`, "error")
+            openInfoModalWithParams(`Hiba történt a lista módosítása során:\n\r${err.message}`, "error")
         })
     }
 
@@ -69,26 +72,34 @@ export default function jobBlock({ info, index, modifyJobs, deleteJobById }) {
             id: info.id
         }).then(res => {
             if (res.error) {
-                openModalWithParams(`Hiba történt a lista módosítása során:\n\r${res.error.data.message}`, "error")
+                openInfoModalWithParams(`Hiba történt a lista módosítása során:\n\r${res.error.data.message}`, "error")
             } else {
                 deleteJobById(info.id)
                 setIsThereChange(false)
 
-                openModalWithParams("Lista sikeresen frissítve!", "success")
+                openInfoModalWithParams("Lista sikeresen frissítve!", "success")
             }
         }).catch(err => {
-            openModalWithParams(`Hiba történt a lista módosítása során:\n\r${err.message}`, "error")
+            openInfoModalWithParams(`Hiba történt a lista módosítása során:\n\r${err.message}`, "error")
         })
     }
 
-    const openModalWithParams = (text, icon) => {
-        setModalText(text)
-        setModalIcon(icon)
-        setModalVisible(true)
+    const openAppliersModal = () => {
+        setAppliersModalVisible(true)
     }
 
-    const closeModal = () => {
-        setModalVisible(false)
+    const closeAppliersModal = () => {
+        setAppliersModalVisible(false)
+    }
+
+    const openInfoModalWithParams = (text, icon) => {
+        setInfoModalText(text)
+        setInfoModalIcon(icon)
+        setInfoModalVisible(true)
+    }
+
+    const closeInfoModal = () => {
+        setInfoModalVisible(false)
     }
 
     const _isThereChange = () => {
@@ -145,15 +156,12 @@ export default function jobBlock({ info, index, modifyJobs, deleteJobById }) {
                         }
                         <button className="p-2 border border-gray-200 bg-red-300 rounded-md text-white text-xs hover:bg-red-200 duration-300" onClick={() => onDelete()}>❌</button>
                     </div>
-                    <button className="p-2 self-end border border-gray-200 bg-gray-300 rounded-md text-xs hover:bg-gray-200 duration-300" onClick={() => onDetails()}>Jelentkezők megtekintése</button>
+                    <button className="p-2 self-end border border-gray-200 bg-gray-300 rounded-md text-xs hover:bg-gray-200 duration-300" onClick={() => openAppliersModal()}>Jelentkezők megtekintése</button>
                 </div>
             </div>
 
-            {isModalVisible ?
-                <InfoModal isVisible={isModalVisible} text={modaltext} icon={modalIcon} closeModal={closeModal} />
-                :
-                <></>
-            }
+            <InfoModal isVisible={isInfoModalVisible} text={infoModaltext} icon={infoModalIcon} closeModal={closeInfoModal} />
+            <AppliersModal isVisible={isAppliersModalVisible} closeModal={closeAppliersModal} jobId={info.id} />
 
         </>
     )

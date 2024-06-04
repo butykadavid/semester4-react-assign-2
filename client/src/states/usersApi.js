@@ -43,9 +43,12 @@ export const usersApi = createApi({
             })
         }),
         getApplications: builder.query({
-            query: (id) => `applicants?/userId=${id}`
+            query: (id) => `applicants?userId=${id}`
+        }),
+        getApplicants: builder.query({
+            query: (id) => `applicants?jobId=${id}`
         })
     })
 })
 
-export const { useGetUserQuery, useCreateUserMutation, useLoginUserMutation, useCreateJobUserMutation, useGetApplicationsQuery } = usersApi;
+export const { useGetUserQuery, useCreateUserMutation, useLoginUserMutation, useCreateJobUserMutation, useGetApplicationsQuery, useGetApplicantsQuery } = usersApi;
