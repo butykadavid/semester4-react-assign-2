@@ -21,11 +21,11 @@ export default function AppliersModal({ isVisible, closeModal, jobId }) {
                             <h1>Jelentkezők</h1>
                         </div>
 
-                        <div className="py-4 w-full">
+                        <div className="py-4 w-full text-sm">
 
                             {data.map((i, index) => {
                                 return (
-                                    <div className="flex justify-between" key={index}>
+                                    <div className="flex justify-between mt-2" key={index}>
                                         <div className="flex">
                                             <p className="text-md mr-4">{index + 1}.</p>
                                             <p className="text-md">{i.user.fullname}</p>

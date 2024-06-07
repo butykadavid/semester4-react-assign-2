@@ -45,7 +45,9 @@ export default function ProfileCardEmployer({ profile }) {
                 </div>
 
                 {/* Jobs container */}
-                <div className="flex flex-col justify-center items-center text-xs py-5">
+                <div className="flex flex-col justify-center items-center py-5">
+
+                    <h1 className="self-start mb-4">Aktív álláshírdetések</h1>
 
                     {_jobs.length === 0 ?
                         <h1 className="text-gray-400">Nincsenek közzétett álláshírdetések</h1>

@@ -123,7 +123,7 @@ export default function jobBlock({ info, index, modifyJobs, deleteJobById }) {
 
     return (
         <>
-            <div className="w-full flex justify-between items-center p-2 my-2 rounded-md border border-gray-300 bg-gray-100">
+            <div className="w-full text-xs flex justify-between items-center p-2 my-2 rounded-md border border-gray-300 bg-gray-100">
                 <p className="p-6">{index + 1}</p>
                 <div className="w-2/3 flex flex-wrap justify-evenly items-center">
                     <input type="text" className="p-2 m-2 w-1/4 border border-gray-300 rounded-md" value={company} onChange={(e) => setCompany(e.target.value)} />

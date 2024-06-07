@@ -1,5 +1,5 @@
 import { useGetJobQuery } from "../states/jobsApi";
-import { useCreateJobUserMutation } from "../states/usersApi";
+import { useCreateJobUserMutation, useGetApplicantsQuery } from "../states/usersApi";
 import { useNavigate, useParams } from 'react-router-dom';
 
 import JobCard from '../components/jobCard'
@@ -15,8 +15,12 @@ export default function JobDetails() {
     const [isModalVisible, setModalVisible] = useState(false)
 
     const isAuthenticated = useSelector(state => !!state.user.token)
+    const user = useSelector(state => {
+        if (isAuthenticated) return state.user
+    })
 
-    const { data, isSuccess: isGetJobSuccess, isLoading: isGetJobLoading } = useGetJobQuery(jobId)
+    const { data: jobData, isSuccess: isGetJobSuccess, isLoading: isGetJobLoading } = useGetJobQuery(jobId)
+    const { data: appsData, isSuccess: isAppsSuccess, isLoading: isAppsLoading } = useGetApplicantsQuery(jobId)
 
     const [createJobUser] = useCreateJobUserMutation()
 
@@ -35,14 +39,14 @@ export default function JobDetails() {
             }
         }).then(result => {
             if (result.error) {
-                openModalWithParams(`Hiba történt a jelentkezés során:\n\r${result.error.data.message}`,"error")
+                openModalWithParams(`Hiba történt a jelentkezés során:\n\r${result.error.data.message}`, "error")
             } else {
-                openModalWithParams(`Sikeres jelentkezés!`,"success")
+                openModalWithParams(`Sikeres jelentkezés!`, "success")
             }
-          })
-          .catch(error => {
-            openModalWithParams(`Hiba történt a jelentkezés során:\n\r${error.message}`,"error")
-          });
+        })
+            .catch(error => {
+                openModalWithParams(`Hiba történt a jelentkezés során:\n\r${error.message}`, "error")
+            });
     }
 
     const openModalWithParams = (text, icon) => {
@@ -56,7 +60,7 @@ export default function JobDetails() {
     }
 
 
-    if (isGetJobLoading) {
+    if (isGetJobLoading || isAppsLoading) {
         return (
             <div className="loader"></div>
         )
@@ -64,14 +68,23 @@ export default function JobDetails() {
 
     if (isGetJobSuccess) {
         return (
-        <>
-            <div className="flex flex-col justify-center items-center">
-                <JobCard job={data} isDetailsPageLayout={true} />
-                <button onClick={() => onApply()} className="mt-5 py-1 px-2 text-lg rounded-md text-white bg-green-500 border border-gray-300 hover:bg-green-300 duration-300">Jelentkezek</button>
-            </div>
+            <>
+                <div className="flex flex-col justify-center items-center">
+                    <JobCard job={jobData} isDetailsPageLayout={true} />
+                    {isAppsSuccess ?
+                        <>
+                            {appsData.find(a => a.userId === user.user.id) ? <></> :
+                                <button onClick={() => onApply()} className="mt-5 py-1 px-2 text-lg rounded-md text-white bg-green-500 border border-gray-300 hover:bg-green-300 duration-300">Jelentkezek</button>
+                            }
 
-            <InfoModal isVisible={isModalVisible} text={modaltext} icon={modalIcon} closeModal={closeModal}/>
-        </>
+                        </>
+                        :
+                        <></>
+                    }
+                </div>
+
+                <InfoModal isVisible={isModalVisible} text={modaltext} icon={modalIcon} closeModal={closeModal} />
+            </>
         )
     }
 }

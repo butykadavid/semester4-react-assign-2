@@ -86,8 +86,8 @@ export default function ExperienceBlock({ info, index, modifyExps, deleteExpById
 
     return (
         <>
-            <div className="w-full flex justify-evenly items-center p-2 my-2">
-                <p>{index + 1}</p>
+            <div className="w-full flex justify-evenly items-center p-2 my-2 text-xs">
+                <p className="mr-2">{index + 1}.</p>
                 <input type="text" className="p-2 w-1/4 border border-gray-300 rounded-md" value={company} onChange={(e) => setCompany(e.target.value)} />
                 <input type="text" className="p-2 w-1/4 border border-gray-300 rounded-md" value={title} onChange={(e) => setTitle(e.target.value)} />
                 <input type="text" className="p-2 w-1/4 border border-gray-300 rounded-md" value={interval} onChange={(e) => setInterval(e.target.value)} />
