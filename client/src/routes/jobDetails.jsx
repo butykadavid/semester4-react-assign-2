@@ -57,6 +57,8 @@ export default function JobDetails() {
 
     const closeModal = () => {
         setModalVisible(false)
+
+        if (modalIcon != "error") navigate(`/profile/${user.user.id}`) 
     }
 
 
