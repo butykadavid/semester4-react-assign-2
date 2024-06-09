@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import JobCard from "../components/jobCard";
 import JobsFilter from "../components/jobsFilter";
 import { useGetJobsQuery } from "../states/jobsApi";
+import InfoModal from "../components/infoModal"
 
 export default function MainPage() {
 
@@ -15,7 +16,9 @@ export default function MainPage() {
 
     const [filters, setFilters] = useState({})
 
-    const {data, isSuccess, isLoading} = useGetJobsQuery(filters);
+    const [isErrorModalVisible, setErrorModalVisible] = useState(true)
+
+    const { data, isSuccess, isLoading } = useGetJobsQuery(filters);
 
     const _setCompany = (value) => {
         setCompany(value)
@@ -49,7 +52,7 @@ export default function MainPage() {
             type: type,
             loc: location,
             isRemote: isRemote,
-          });
+        });
     }
 
     const clearFilters = () => {
@@ -59,6 +62,10 @@ export default function MainPage() {
         setType("")
         setLocation("")
         setIsRemote(null)
+    }
+
+    const closeModal = () => {
+        setErrorModalVisible(false)
     }
 
     // useEffect(() => {
@@ -77,20 +84,20 @@ export default function MainPage() {
             <div className="w-full flex flex-wrap justify-center items-start">
 
                 <JobsFilter _setCompany={_setCompany}
-                            _setMinSalary={_setMinSalary} 
-                            _setMaxSalary={_setMaxSalary} 
-                            _setType={_setType} 
-                            _setLocation={_setLocation} 
-                            _setIsRemote={_setIsRemote} 
-                            company={company}
-                            minSalary={minSalary}
-                            maxSalary={maxSalary}
-                            type={type}
-                            location={location}
-                            isRemote={isRemote}
-                            clearFilters={clearFilters}
-                            applyFilters={applyFilters}
-                            />
+                    _setMinSalary={_setMinSalary}
+                    _setMaxSalary={_setMaxSalary}
+                    _setType={_setType}
+                    _setLocation={_setLocation}
+                    _setIsRemote={_setIsRemote}
+                    company={company}
+                    minSalary={minSalary}
+                    maxSalary={maxSalary}
+                    type={type}
+                    location={location}
+                    isRemote={isRemote}
+                    clearFilters={clearFilters}
+                    applyFilters={applyFilters}
+                />
 
                 {/* Dummy */}
                 <div className="w-full h-10"></div>
@@ -98,7 +105,7 @@ export default function MainPage() {
                 {
                     data.data.map((job, index) => {
                         return (
-                            <JobCard job={job} key={index} isDetailsPageLayout={false}/>
+                            <JobCard job={job} key={index} isDetailsPageLayout={false} />
                         )
                     })
                 }
@@ -109,5 +116,7 @@ export default function MainPage() {
             </div>
         );
 
+    } else {
+        return <InfoModal isVisible={isErrorModalVisible} text={"Hiba az adatok lekérése közben.\n\rBizonyosodj meg róla, hogy fut a szerver!"} icon={"error"} closeModal={closeModal}/>
     }
 }
